@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Borneo is burning again — 2026 fire season</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    :root {
+      --surface: #fcfcfb; --page: #f9f9f7; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+      --grid: #e1e0d9; --hero: #e34948; --ctx1: #c3c2b7; --ctx2: #a8a69f; --ctx3: #898781;
+      --seq1: #fde6d3; --seq2: #f9b98a; --seq3: #f08a4b; --seq4: #d95926; --seq5: #8f2d0f;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink);
+    }
+    body { margin: 0; background: var(--page); line-height: 1.5; }
+    main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+    h1 { font-size: 34px; line-height: 1.15; margin: 0 0 8px; }
+    h2 { font-size: 21px; margin: 48px 0 8px; }
+    p { font-size: 16px; color: var(--ink2); max-width: 680px; }
+    .dek { font-size: 19px; color: var(--ink2); margin-bottom: 28px; }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 24px 0; }
+    .tile { background: var(--surface); border: 1px solid var(--grid); border-radius: 8px; padding: 14px 16px; }
+    .tile .v { font-size: 30px; font-weight: 600; }
+    .tile .v.hero { color: var(--hero); }
+    .tile .l { font-size: 12px; color: var(--muted); }
+    figure { margin: 16px 0 0; background: var(--surface); border: 1px solid var(--grid); border-radius: 8px; padding: 14px; }
+    figcaption { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    #map { height: 440px; border-radius: 6px; }
+    .legend { display: flex; gap: 2px; align-items: center; font-size: 11px; color: var(--muted); margin-top: 8px; }
+    .legend i { display: inline-block; width: 34px; height: 10px; }
+    table { border-collapse: collapse; font-size: 13px; width: 100%; font-variant-numeric: tabular-nums; }
+    th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid); }
+    th:first-child, td:first-child { text-align: left; }
+    a { color: #1c5cab; }
+    .caveat { font-size: 13px; color: var(--muted); border-left: 3px solid var(--grid); padding-left: 12px; }
+    @media (prefers-color-scheme: dark) {
+      :root { --surface: #1a1a19; --page: #0d0d0d; --ink: #fff; --ink2: #c3c2b7; --grid: #2c2c2a; --hero: #e66767;
+              --ctx1: #4a4a47; --ctx2: #6a6965; --ctx3: #898781; }
+      a { color: #86b6ef; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Borneo is burning again</h1>
+  <p class="dek">August 2026 has produced the largest August fire footprint on Borneo in the 26-year satellite record — larger than the haze years of 2015, 2019 and 2023, with the driest weeks still ahead.</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <h2>Where it is burning now</h2>
+  <p>Each province is shaded by the area of 1 km MODIS pixels that recorded at least one fire this August. Points are live hotspots from the past seven days, coloured from dark red (older) to yellow (newest).</p>
+  <figure>
+    <div id="map"></div>
+    <div class="legend">Aug 2026 fire footprint, km² &nbsp;<i style="background:var(--seq1)"></i><i style="background:var(--seq2)"></i><i style="background:var(--seq3)"></i><i style="background:var(--seq4)"></i><i style="background:var(--seq5)"></i>&nbsp; <span id="legend-ticks"></span></div>
+    <figcaption>Provinces: FAO GAUL 2015 (Kalimantan Utara is included in Kalimantan Timur). Hotspots: NASA FIRMS via Google Earth Engine.</figcaption>
+  </figure>
+
+  <h2>2026 against the bad years</h2>
+  <p>Monthly fire footprint for Borneo. The grey lines are the three most recent severe El Niño-driven seasons. In each of those, the peak came in September or October — 2026 is ahead of all of them with August not yet over.</p>
+  <figure><canvas id="monthly" height="300"></canvas>
+    <figcaption>km² of 1 km pixels with ≥1 MODIS active-fire detection in the month. 2026 August covers 1–21 Aug only.</figcaption></figure>
+
+  <h2>Day by day this season</h2>
+  <p>Daily detections since 1 June, with a seven-day average. The saw-tooth pattern is the Terra/Aqua overpass geometry, not the fire itself — read the smoothed line.</p>
+  <figure><canvas id="daily" height="280"></canvas>
+    <figcaption>Borneo-wide daily footprint, km². Last two days are not yet in FIRMS.</figcaption></figure>
+
+  <h2>Twenty-six years of fire</h2>
+  <p>Burned area from the MODIS burned-area product, which maps the scar rather than the flame. The big years line up with El Niño droughts — 2002, 2004, 2006, 2009, 2014–15, 2019, 2023 — when drained peatlands in Kalimantan dry out and burn for months.</p>
+  <figure><canvas id="annual" height="280"></canvas>
+    <figcaption>MODIS MCD64A1 burned area per year, km². 2026 is incomplete: the product lags about two months.</figcaption></figure>
+
+  <h2>By province, this season</h2>
+  <figure><table id="provtable"></table>
+    <figcaption>Monthly fire footprint km², June–August 2026, and the same province's August 2023 for comparison.</figcaption></figure>
+
+  <h2>What this means for the carbon concessions</h2>
+  <p>The REDD+ concessions near Palangka Raya — Katingan Mentaya and Rimba Raya — sit on exactly the kind of drained peat that dominates these fires. Open the <a href="/">viewer</a>, pick <em>Active fires</em> and drag the slider through August, or pick <em>Burn scars (dNBR)</em> to see 10 m Sentinel-2 burn-severity mapping and a hectare count per concession.</p>
+
+  <h2>Caveats</h2>
+  <p class="caveat">"Fire footprint" counts 1 km MODIS pixels with at least one detection; it over-states area for small fires and is a fire <em>activity</em> index, not burned area. MODIS misses fires under cloud and smoke, and small or smouldering peat fires. Concession boundaries in the viewer are approximate placeholders until official polygons are loaded. Data: NASA FIRMS, MODIS MCD64A1 (NASA LP DAAC), FAO GAUL, via Google Earth Engine.</p>
+</main>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="/static/story.js"></script>
+</body>
+</html>

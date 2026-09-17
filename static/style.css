@@ -1,0 +1,44 @@
+:root { font-family: system-ui, sans-serif; font-size: 14px; color: #1d1d1d; }
+html, body { margin: 0; height: 100%; }
+#map { position: absolute; inset: 0; }
+
+#panel {
+  position: absolute; top: 12px; left: 12px; bottom: 12px;
+  width: 330px; overflow-y: auto;
+  background: rgba(255,255,255,.95); border-radius: 8px;
+  padding: 14px 16px; box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+h1 { font-size: 17px; margin: 0 0 2px; }
+h2 { font-size: 14px; margin: 0 0 8px; }
+.sub { margin: 0 0 14px; color: #666; font-size: 12px; }
+section { border-top: 1px solid #e4e4e4; padding: 12px 0; }
+label { display: block; margin-bottom: 8px; font-size: 12px; color: #444; }
+select, input[type=date] { display: block; width: 100%; margin-top: 3px; padding: 4px; font: inherit; }
+input[type=range] { width: 60%; vertical-align: middle; }
+.row { display: flex; gap: 8px; }
+.row label { flex: 1; }
+button { width: 100%; padding: 7px; font: inherit; cursor: pointer;
+  background: #2f6f3e; color: #fff; border: 0; border-radius: 5px; }
+button:disabled { background: #999; }
+#status, #ts-status { font-size: 12px; color: #666; margin-top: 6px; min-height: 1.2em; }
+#status.err, #ts-status.err { color: #b00020; }
+.hidden { display: none !important; }
+.small { font-size: 11px; color: #777; margin-top: -6px; }
+#burned { font-size: 12px; margin-top: 8px; background: #fff3e8; padding: 6px 8px; border-radius: 4px; }
+.warn { font-size: 11px; color: #8a5a00; background: #fff6e0; padding: 6px; border-radius: 4px; }
+
+#list { list-style: none; padding: 0; margin: 0; }
+#list li { padding: 6px 8px; border-radius: 4px; cursor: pointer; display: flex; gap: 8px; align-items: center; }
+#list li:hover, #list li.active { background: #eef4ee; }
+#list .swatch { width: 12px; height: 12px; border: 2px solid; border-radius: 2px; flex-shrink: 0; }
+#list .vis { margin: 0; }
+#list div { flex: 1; }
+#list small { color: #777; display: block; }
+
+.toggles label { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; font-size: 12px; }
+.toggles i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; opacity: .8; }
+.maplibregl-popup-content { font: 12px system-ui, sans-serif; max-width: 260px; }
+.maplibregl-popup-content b { font-size: 13px; }
+#legend { margin-top: 8px; font-size: 11px; }
+#legend .bar { height: 10px; border-radius: 3px; }
+#legend .ticks { display: flex; justify-content: space-between; color: #555; }

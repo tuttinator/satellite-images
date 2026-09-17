@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Palangka Raya forest viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <link href="/static/style.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <aside id="panel">
+    <h1>Palangka Raya forest viewer</h1>
+    <p class="sub">Sentinel-2, cloud-masked median composites via Earth Engine.
+      <a href="/story">Borneo fire story →</a></p>
+
+    <section>
+      <label>Layer
+        <select id="layer"></select>
+      </label>
+      <div class="row">
+        <label>From <input type="date" id="start" /></label>
+        <label>To <input type="date" id="end" /></label>
+      </div>
+      <div id="before" class="row hidden">
+        <label>Before from <input type="date" id="bstart" /></label>
+        <label>Before to <input type="date" id="bend" /></label>
+      </div>
+      <div id="firectl" class="hidden">
+        <label>Fires in the 7 days ending <b id="fire-date"></b>
+          <input type="range" id="fire-slider" min="0" max="80" step="1" value="80" />
+        </label>
+        <div class="row small"><span>1 Jun</span><span style="margin-left:auto">today</span></div>
+      </div>
+      <div class="row">
+        <label><input type="range" id="opacity" min="0" max="1" step="0.05" value="1" /> Opacity</label>
+      </div>
+      <button id="apply">Load imagery</button>
+      <div id="status"></div>
+      <div id="legend"></div>
+    </section>
+
+    <section>
+      <h2>Context layers</h2>
+      <div id="ctx-toggles" class="toggles">
+        <label><input type="checkbox" data-kind="concession" checked /> <i style="background:#8c6d31"></i> Forestry concessions, Kalimantan (PBPH, <span class="n"></span>)</label>
+        <label><input type="checkbox" data-kind="verra" checked /> <i style="border:2px dashed #b35900;background:none"></i> Verra project areas, Indonesia (<span class="n"></span>)</label>
+        <label><input type="checkbox" data-kind="village_forest" checked /> <i style="background:#2ca25f"></i> Village forests, Indonesia (Hutan Desa, <span class="n"></span>)</label>
+        <label><input type="checkbox" data-kind="protected" checked /> <i style="background:#1f78b4"></i> Protected areas, Indonesia (WDPA, <span class="n"></span>)</label>
+      </div>
+      <div class="small">Click any polygon for details. Untick a focus area below to hide it.</div>
+    </section>
+
+    <section>
+      <h2>Focus areas</h2>
+      <ul id="list"></ul>
+      <p class="warn">Concession polygons are licence (PBPH) boundaries from the Ministry of Forestry,
+        Dec 2023. Rimba Raya's licence is recorded as revoked (<i>dicabut</i>); Verra accounting areas may differ.</p>
+    </section>
+
+    <section id="ts" class="hidden">
+      <h2 id="ts-title"></h2>
+      <label>Index
+        <select id="ts-index">
+          <option>NDVI</option><option>NBR</option><option>NDMI</option>
+        </select>
+      </label>
+      <canvas id="chart" height="180"></canvas>
+      <div id="ts-status"></div>
+      <h2 style="margin-top:14px">Weekly fire footprint (km²)</h2>
+      <canvas id="firechart" height="180"></canvas>
+      <div id="fire-status"></div>
+      <div id="burned" class="hidden"></div>
+    </section>
+  </aside>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
