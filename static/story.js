@@ -6,29 +6,52 @@ Chart.defaults.font.family = "system-ui, -apple-system, 'Segoe UI', sans-serif";
 Chart.defaults.color = css("--muted");
 Chart.defaults.borderColor = css("--grid");
 Chart.defaults.animation = false;
+Chart.defaults.aspectRatio = 2.6; // the canvas height attribute alone gives square charts
 Chart.defaults.plugins.tooltip.mode = "index";
 Chart.defaults.plugins.tooltip.intersect = false;
 
 (async () => {
-  const data = await (await fetch("/api/borneo_fire")).json();
+  // /story → Borneo; /story?island=sumatra → Sumatra
+  const ISLANDS = { borneo: { center: [114.2, 0.8], zoom: 5.2 }, sumatra: { center: [101.8, -0.2], zoom: 5.0 } };
+  const island = new URLSearchParams(location.search).get("island") in ISLANDS
+    ? new URLSearchParams(location.search).get("island") : "borneo";
+  const data = await (await fetch(`/api/fire/${island}`)).json();
   const R = data.regions;
-  const B = R.borneo.monthly;
+  const NAME = R[island].label;
+  const B = R[island].monthly;
   const thisYear = +data.generated.slice(0, 4);
-  const thisMonth = +data.generated.slice(5, 7);
   const mkey = (y, m) => `${y}-${String(m).padStart(2, "0")}`;
   const CMP = [2015, 2019, 2023];
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  // FIRMS lands a day or so late: the season runs to the last day with a detection.
+  const through = Object.entries(R[island].daily).filter(([, v]) => v > 0).map(([d]) => d).pop();
+  const thisMonth = +through.slice(5, 7);
+  const toDate = `${MONTHS[thisMonth - 1]} (to ${+through.slice(8, 10)}th)`;
+  // Headline month: the last *complete* month, ranked against every year in the record.
+  const focus = thisMonth - 1;
+  const FOCUS = new Date(Date.UTC(thisYear, focus - 1, 1)).toLocaleString("en", { month: "long", timeZone: "UTC" });
+  const allYears = [...new Set(Object.keys(B).map((k) => +k.slice(0, 4)))].filter((y) => y < thisYear);
+  document.title = `${NAME} is burning again — ${thisYear} fire season`;
+  document.querySelectorAll("[data-island]").forEach((el) => (el.textContent = NAME));
+  document.querySelectorAll("[data-focus]").forEach((el) => (el.textContent = `${FOCUS} ${thisYear}`));
 
   // ---- stat tiles
-  const augNow = B[mkey(thisYear, 8)].fire_km2;
-  const augCmp = CMP.map((y) => B[mkey(y, 8)].fire_km2);
-  const ytd = (y) => [...Array(8)].reduce((s, _, i) => s + B[mkey(y, i + 1)].fire_km2, 0);
-  const provAug = Object.entries(R).filter(([k]) => k !== "borneo")
-    .map(([k, v]) => [v.label, v.monthly[mkey(thisYear, 8)].fire_km2]).sort((a, b) => b[1] - a[1]);
+  const augNow = B[mkey(thisYear, focus)].fire_km2;
+  const augCmp = CMP.map((y) => B[mkey(y, focus)].fire_km2);
+  const ranked = allYears.map((y) => [B[mkey(y, focus)].fire_km2, y]).sort((a, b) => b[0] - a[0]);
+  const rank = 1 + ranked.filter(([v]) => v > augNow).length;
+  const lastBigger = Math.max(...ranked.filter(([v]) => v > augNow).map(([, y]) => y), 0);
+  const ord = (n) => `${n}${["th", "st", "nd", "rd"][n % 10 < 4 && (n % 100 - n % 10) !== 10 ? n % 10 : 0]}`;
+  const provAug = Object.entries(R).filter(([k]) => k !== island)
+    .map(([k, v]) => [v.label, v.monthly[mkey(thisYear, focus)].fire_km2]).sort((a, b) => b[1] - a[1]);
+  document.getElementById("dek").textContent = rank === 1
+    ? `${FOCUS} ${thisYear} produced the largest ${FOCUS} fire footprint on ${NAME} in the ${allYears.length + 1}-year satellite record.`
+    : `${FOCUS} ${thisYear} produced the ${ord(rank)}-largest ${FOCUS} fire footprint on ${NAME} in the ${allYears.length + 1}-year satellite record — the biggest since ${lastBigger} — and the season is still running.`;
   document.getElementById("tiles").innerHTML = [
-    [fmt(augNow), `km² fire footprint, 1–21 Aug ${thisYear}`, true],
-    [fmt(Math.max(...augCmp)), `previous August record (${CMP[augCmp.indexOf(Math.max(...augCmp))]})`],
-    [`${(augNow / (augCmp.reduce((a, b) => a + b) / 3)).toFixed(1)}×`, "the Aug 2015 / 2019 / 2023 average"],
-    [`${fmt((100 * provAug[0][1]) / augNow)}%`, `of August fire is in ${provAug[0][0]}`],
+    [fmt(augNow), `km² fire footprint, ${FOCUS} ${thisYear}`, true],
+    [ord(rank), `largest ${FOCUS} since ${allYears[0]} (record: ${fmt(ranked[0][0])} in ${ranked[0][1]})`],
+    [`${(augNow / (augCmp.reduce((a, b) => a + b) / 3)).toFixed(1)}×`, `the ${FOCUS} 2015 / 2019 / 2023 average`],
+    [`${fmt((100 * provAug[0][1]) / augNow)}%`, `of ${FOCUS} fire is in ${provAug[0][0]}`],
   ].map(([v, l, hero]) => `<div class="tile"><div class="v ${hero ? "hero" : ""}">${v}</div><div class="l">${l}</div></div>`).join("");
 
   // ---- map
@@ -37,9 +60,9 @@ Chart.defaults.plugins.tooltip.intersect = false;
   const breaks = [0.05, 0.15, 0.35, 0.65].map((f) => f * maxAug);
   document.getElementById("legend-ticks").textContent = `0 · ${breaks.map(fmt).join(" · ")} · ${fmt(maxAug)}`;
   const outlines = data.outlines;
-  outlines.features = outlines.features.filter((f) => f.properties.key !== "borneo");
+  outlines.features = outlines.features.filter((f) => f.properties.key !== island);
   for (const f of outlines.features) {
-    const v = R[f.properties.key].monthly[mkey(thisYear, 8)].fire_km2;
+    const v = R[f.properties.key].monthly[mkey(thisYear, focus)].fire_km2;
     f.properties.aug = v;
     f.properties.color = seq[breaks.filter((b) => v > b).length];
   }
@@ -48,14 +71,14 @@ Chart.defaults.plugins.tooltip.intersect = false;
     style: { version: 8, sources: { osm: { type: "raster", tileSize: 256,
       tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], attribution: "© OpenStreetMap · NASA FIRMS · Google Earth Engine" } },
       layers: [{ id: "osm", type: "raster", source: "osm", paint: { "raster-saturation": -0.9, "raster-opacity": 0.6 } }] },
-    center: [114.2, 0.8], zoom: 5.2, attributionControl: true,
+    ...ISLANDS[island], attributionControl: true,
   });
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
   map.on("load", async () => {
     map.addSource("prov", { type: "geojson", data: outlines });
     map.addLayer({ id: "prov-fill", type: "fill", source: "prov", paint: { "fill-color": ["get", "color"], "fill-opacity": 0.55 } });
     map.addLayer({ id: "prov-line", type: "line", source: "prov", paint: { "line-color": css("--ink2"), "line-width": 0.8 } });
-    const end = new Date(data.generated); const start = new Date(end); start.setDate(start.getDate() - 7);
+    const end = new Date(through); end.setDate(end.getDate() + 1); const start = new Date(end); start.setDate(start.getDate() - 7);
     try {
       const t = await (await fetch(`/api/tiles?layer=fire&start=${iso(start)}&end=${iso(end)}`)).json();
       if (t.url) {
@@ -66,13 +89,13 @@ Chart.defaults.plugins.tooltip.intersect = false;
     const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
     map.on("mousemove", "prov-fill", (e) => {
       const p = e.features[0].properties;
-      pop.setLngLat(e.lngLat).setHTML(`<b>${p.label}</b><br>${fmt(p.aug)} km² in Aug ${thisYear}`).addTo(map);
+      pop.setLngLat(e.lngLat).setHTML(`<b>${p.label}</b><br>${fmt(p.aug)} km² in ${FOCUS} ${thisYear}`).addTo(map);
     });
     map.on("mouseleave", "prov-fill", () => pop.remove());
   });
 
   // ---- monthly comparison
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = MONTHS;
   const ctx = ["--ctx1", "--ctx2", "--ctx3"].map(css);
   const labelEnd = {
     id: "labelEnd",
@@ -106,8 +129,8 @@ Chart.defaults.plugins.tooltip.intersect = false;
   });
 
   // ---- daily
-  const daily = R.borneo.daily;
-  const days = Object.keys(daily).slice(0, -2);
+  const daily = R[island].daily;
+  const days = Object.keys(daily).filter((d) => d <= through);
   const vals = days.map((d) => daily[d]);
   const roll = vals.map((_, i) => { const w = vals.slice(Math.max(0, i - 6), i + 1); return w.reduce((a, b) => a + b) / w.length; });
   new Chart(document.getElementById("daily"), {
@@ -132,10 +155,14 @@ Chart.defaults.plugins.tooltip.intersect = false;
   });
 
   // ---- province table
-  const rows = Object.entries(R).filter(([k]) => k !== "borneo")
-    .sort((a, b) => b[1].monthly[mkey(thisYear, 8)].fire_km2 - a[1].monthly[mkey(thisYear, 8)].fire_km2);
+  const rows = Object.entries(R).filter(([k]) => k !== island)
+    .sort((a, b) => b[1].monthly[mkey(thisYear, focus)].fire_km2 - a[1].monthly[mkey(thisYear, focus)].fire_km2);
+  const cols = [...Array(thisMonth - 5)].map((_, i) => i + 6); // June → current month
+  const ref = mkey(2023, focus);
   document.getElementById("provtable").innerHTML =
-    `<tr><th>Province</th><th>Jun</th><th>Jul</th><th>Aug (to 21st)</th><th>Aug 2023</th></tr>` +
-    rows.map(([, v]) => `<tr><td>${v.label}</td>${[6, 7, 8].map((m) => `<td>${fmt(v.monthly[mkey(thisYear, m)].fire_km2)}</td>`).join("")}<td>${fmt(v.monthly["2023-08"].fire_km2)}</td></tr>`).join("") +
-    `<tr><th>Borneo</th>${[6, 7, 8].map((m) => `<th>${fmt(B[mkey(thisYear, m)].fire_km2)}</th>`).join("")}<th>${fmt(B["2023-08"].fire_km2)}</th></tr>`;
+    `<tr><th>Province</th>${cols.map((m) => `<th>${m === thisMonth ? toDate : MONTHS[m - 1]}</th>`).join("")}<th>${FOCUS} 2023</th></tr>` +
+    rows.map(([, v]) => `<tr><td>${v.label}</td>${cols.map((m) => `<td>${fmt(v.monthly[mkey(thisYear, m)].fire_km2)}</td>`).join("")}<td>${fmt(v.monthly[ref].fire_km2)}</td></tr>`).join("") +
+    `<tr><th>${NAME}</th>${cols.map((m) => `<th>${fmt(B[mkey(thisYear, m)].fire_km2)}</th>`).join("")}<th>${fmt(B[ref].fire_km2)}</th></tr>`;
+  document.getElementById("monthly-cap").textContent =
+    `km² of 1 km pixels with ≥1 MODIS active-fire detection in the month. ${thisYear} ${MONTHS[thisMonth - 1]} covers 1–${+through.slice(8, 10)} ${MONTHS[thisMonth - 1]} only.`;
 })();

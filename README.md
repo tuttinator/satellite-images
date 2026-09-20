@@ -34,9 +34,23 @@ make dev                      # http://127.0.0.1:8000
 - **Burn scars (dNBR)** layer: Sentinel-2 NBR(before) − NBR(after); with a concession selected
   it also reports hectares above the USGS moderate (0.27) and high (0.66) severity thresholds.
 - **Weekly fire chart** per concession: km² of fire pixels per week for 2015/2019/2023/2025/2026.
-- **Borneo story** (`/story`): a narrative page built from `outputs/borneo_fire.json`, produced by
-  `uv run python scripts/fire_analysis.py` (monthly FIRMS footprint + MCD64A1 burned area per
-  province, 2001–present, plus daily footprint for the current season; ~5 min to run).
+- **Island stories** (`/story`, `/story?island=sumatra`): a narrative page built from
+  `outputs/{borneo,sumatra}_fire.json`, produced by
+  `uv run python scripts/fire_analysis.py [borneo|sumatra]` (monthly FIRMS footprint + MCD64A1
+  burned area per province, 2001–present, plus daily footprint for the current season; ~8 min
+  each, fine to run in parallel). The page is date-driven: it headlines the last complete month
+  and ranks it against every year in the record.
+
+## Haze (blog post)
+
+- `uv run python scripts/haze_export.py` → `outputs/sea_haze.json`: daily grids for maritime
+  Southeast Asia from 15 July — CAMS NRT smoke (organic-matter AOD and surface PM2.5, 0.4°),
+  FIRMS fire footprint per 0.1° cell, and city series. ~2 min.
+- `uv run python scripts/export_blog.py` copies that plus a trimmed fire-season file into
+  `../caleb-tutty.com/static/data/sea-haze/` for the post at `/posts/southeast-asia-haze-2026`.
+- To refresh the post: run the two `fire_analysis.py` jobs, `haze_export.py`, then
+  `export_blog.py`; then re-check the numbers quoted in the post's prose and figure captions
+  (the "15 July – 17 September" / "to 17 Sep" strings are written out by hand).
 
 ## Layout
 

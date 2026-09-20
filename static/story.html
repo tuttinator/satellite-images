@@ -42,40 +42,41 @@
 </head>
 <body>
 <main>
-  <h1>Borneo is burning again</h1>
-  <p class="dek">August 2026 has produced the largest August fire footprint on Borneo in the 26-year satellite record — larger than the haze years of 2015, 2019 and 2023, with the driest weeks still ahead.</p>
+  <h1><span data-island>Borneo</span> is burning again</h1>
+  <p class="dek" id="dek"></p>
+  <p style="font-size:13px"><a href="/story">Borneo</a> · <a href="/story?island=sumatra">Sumatra</a> · <a href="/">concession viewer</a></p>
 
   <div class="tiles" id="tiles"></div>
 
   <h2>Where it is burning now</h2>
-  <p>Each province is shaded by the area of 1 km MODIS pixels that recorded at least one fire this August. Points are live hotspots from the past seven days, coloured from dark red (older) to yellow (newest).</p>
+  <p>Each province is shaded by the area of 1 km MODIS pixels that recorded at least one fire in the last complete month. Points are hotspots from the latest seven days of data, coloured from dark red (older) to yellow (newest).</p>
   <figure>
     <div id="map"></div>
-    <div class="legend">Aug 2026 fire footprint, km² &nbsp;<i style="background:var(--seq1)"></i><i style="background:var(--seq2)"></i><i style="background:var(--seq3)"></i><i style="background:var(--seq4)"></i><i style="background:var(--seq5)"></i>&nbsp; <span id="legend-ticks"></span></div>
+    <div class="legend"><span data-focus>August 2026</span>&nbsp;fire footprint, km² &nbsp;<i style="background:var(--seq1)"></i><i style="background:var(--seq2)"></i><i style="background:var(--seq3)"></i><i style="background:var(--seq4)"></i><i style="background:var(--seq5)"></i>&nbsp; <span id="legend-ticks"></span></div>
     <figcaption>Provinces: FAO GAUL 2015 (Kalimantan Utara is included in Kalimantan Timur). Hotspots: NASA FIRMS via Google Earth Engine.</figcaption>
   </figure>
 
   <h2>2026 against the bad years</h2>
-  <p>Monthly fire footprint for Borneo. The grey lines are the three most recent severe El Niño-driven seasons. In each of those, the peak came in September or October — 2026 is ahead of all of them with August not yet over.</p>
+  <p>Monthly fire footprint for <span data-island>Borneo</span>. The grey lines are the three most recent severe haze seasons, which peaked in September or October. The current month is incomplete, so its point will keep rising.</p>
   <figure><canvas id="monthly" height="300"></canvas>
-    <figcaption>km² of 1 km pixels with ≥1 MODIS active-fire detection in the month. 2026 August covers 1–21 Aug only.</figcaption></figure>
+    <figcaption id="monthly-cap"></figcaption></figure>
 
   <h2>Day by day this season</h2>
   <p>Daily detections since 1 June, with a seven-day average. The saw-tooth pattern is the Terra/Aqua overpass geometry, not the fire itself — read the smoothed line.</p>
   <figure><canvas id="daily" height="280"></canvas>
-    <figcaption>Borneo-wide daily footprint, km². Last two days are not yet in FIRMS.</figcaption></figure>
+    <figcaption>Island-wide daily footprint, km². The most recent days are provisional in FIRMS.</figcaption></figure>
 
   <h2>Twenty-six years of fire</h2>
-  <p>Burned area from the MODIS burned-area product, which maps the scar rather than the flame. The big years line up with El Niño droughts — 2002, 2004, 2006, 2009, 2014–15, 2019, 2023 — when drained peatlands in Kalimantan dry out and burn for months.</p>
+  <p>Burned area from the MODIS burned-area product, which maps the scar rather than the flame. The big years line up with El Niño droughts — 2002, 2004, 2006, 2009, 2014–15, 2019, 2023 — when drained peatlands in Kalimantan and eastern Sumatra dry out and burn for months.</p>
   <figure><canvas id="annual" height="280"></canvas>
     <figcaption>MODIS MCD64A1 burned area per year, km². 2026 is incomplete: the product lags about two months.</figcaption></figure>
 
   <h2>By province, this season</h2>
   <figure><table id="provtable"></table>
-    <figcaption>Monthly fire footprint km², June–August 2026, and the same province's August 2023 for comparison.</figcaption></figure>
+    <figcaption>Monthly fire footprint km² since June, and the same province's 2023 figure for the last complete month.</figcaption></figure>
 
   <h2>What this means for the carbon concessions</h2>
-  <p>The REDD+ concessions near Palangka Raya — Katingan Mentaya and Rimba Raya — sit on exactly the kind of drained peat that dominates these fires. Open the <a href="/">viewer</a>, pick <em>Active fires</em> and drag the slider through August, or pick <em>Burn scars (dNBR)</em> to see 10 m Sentinel-2 burn-severity mapping and a hectare count per concession.</p>
+  <p>The REDD+ concessions near Palangka Raya — Katingan Mentaya and Rimba Raya — sit on exactly the kind of drained peat that dominates these fires. Open the <a href="/">viewer</a>, pick <em>Active fires</em> and drag the slider through the season, or pick <em>Burn scars (dNBR)</em> to see 10 m Sentinel-2 burn-severity mapping and a hectare count per concession.</p>
 
   <h2>Caveats</h2>
   <p class="caveat">"Fire footprint" counts 1 km MODIS pixels with at least one detection; it over-states area for small fires and is a fire <em>activity</em> index, not burned area. MODIS misses fires under cloud and smoke, and small or smouldering peat fires. Concession boundaries in the viewer are approximate placeholders until official polygons are loaded. Data: NASA FIRMS, MODIS MCD64A1 (NASA LP DAAC), FAO GAUL, via Google Earth Engine.</p>

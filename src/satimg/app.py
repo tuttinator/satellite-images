@@ -179,11 +179,13 @@ def story():
     return FileResponse(STATIC / "story.html")
 
 
-@app.get("/api/borneo_fire")
-def borneo_fire():
-    path = ROOT / "outputs" / "borneo_fire.json"
+@app.get("/api/fire/{island}")
+def island_fire(island: str):
+    if island not in ("borneo", "sumatra"):
+        raise HTTPException(404, "unknown island")
+    path = ROOT / "outputs" / f"{island}_fire.json"
     if not path.exists():
-        raise HTTPException(404, "run `uv run python scripts/fire_analysis.py` first")
+        raise HTTPException(404, f"run `uv run python scripts/fire_analysis.py {island}` first")
     return FileResponse(path)
 
 

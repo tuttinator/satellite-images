@@ -1,11 +1,11 @@
-"""Borneo-wide fire analysis via Earth Engine → outputs/borneo_fire.json.
+"""Island-wide fire analysis via Earth Engine → outputs/{borneo,sumatra}_fire.json.
 
-Per region (Borneo total + 7 admin-1 units) and per month 2001–present:
+Per region (island total + its admin-1 units) and per month 2001–present:
   - fire_km2:  area of 1 km FIRMS pixels with ≥1 MODIS active-fire detection that month
   - burned_km2: MODIS MCD64A1 burned area (500 m), lags ~2 months
 Plus daily fire_km2 for the current dry season (from 1 June) for the narrative.
 
-Run:  uv run python scripts/fire_analysis.py
+Run:  uv run python scripts/fire_analysis.py [borneo|sumatra]   (default: borneo)
 """
 
 from __future__ import annotations
@@ -20,13 +20,12 @@ import ee
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from satimg import layers  # noqa: E402
 
-OUT = Path(__file__).resolve().parents[1] / "outputs" / "borneo_fire.json"
-BBOX = [108.5, -4.5, 119.5, 7.5]
+OUT_DIR = Path(__file__).resolve().parents[1] / "outputs"
 FIRST_YEAR = 2001
 TODAY = date.today()
 
 # GAUL 2015 predates the 2012 Kalimantan Utara split; it sits inside Kalimantan Timur here.
-REGIONS = {
+BORNEO = {
     "kalbar": ("Kalimantan Barat", ["Kalimantan Barat"]),
     "kalteng": ("Kalimantan Tengah", ["Kalimantan Tengah"]),
     "kalsel": ("Kalimantan Selatan", ["Kalimantan Selatan"]),
@@ -35,6 +34,26 @@ REGIONS = {
     "sarawak": ("Sarawak", ["Sarawak"]),
     "brunei": ("Brunei", ["Belait", "Brunei and Muara", "Temburong", "Tutong"]),
 }
+SUMATRA = {
+    "aceh": ("Aceh", ["Nangroe Aceh Darussalam"]),
+    "sumut": ("Sumatera Utara", ["Sumatera Utara"]),
+    "sumbar": ("Sumatera Barat", ["Sumatera Barat"]),
+    "riau": ("Riau", ["Riau"]),
+    "kepri": ("Kepulauan Riau", ["Kepulauan-riau"]),
+    "jambi": ("Jambi", ["Jambi"]),
+    "sumsel": ("Sumatera Selatan", ["Sumatera Selatan"]),
+    "babel": ("Bangka Belitung", ["Bangka Belitung"]),
+    "bengkulu": ("Bengkulu", ["Bengkulu"]),
+    "lampung": ("Lampung", ["Lampung"]),
+}
+# island key → (label, bbox, regions)
+ISLANDS = {
+    "borneo": ("Borneo", [108.5, -4.5, 119.5, 7.5], BORNEO),
+    "sumatra": ("Sumatra", [94.5, -6.5, 109.0, 6.5], SUMATRA),
+}
+ISLAND = sys.argv[1] if len(sys.argv) > 1 else "borneo"
+ISLAND_LABEL, BBOX, REGIONS = ISLANDS[ISLAND]
+OUT = OUT_DIR / f"{ISLAND}_fire.json"
 
 
 def region_fc() -> ee.FeatureCollection:
@@ -44,8 +63,8 @@ def region_fc() -> ee.FeatureCollection:
         geom = gaul.filter(ee.Filter.inList("ADM1_NAME", names)).geometry()
         feats.append(ee.Feature(geom, {"key": key, "label": label}))
     fc = ee.FeatureCollection(feats)
-    borneo = ee.Feature(fc.geometry().dissolve(1000), {"key": "borneo", "label": "Borneo"})
-    return fc.merge(ee.FeatureCollection([borneo]))
+    total = ee.Feature(fc.geometry().dissolve(1000), {"key": ISLAND, "label": ISLAND_LABEL})
+    return fc.merge(ee.FeatureCollection([total]))
 
 
 def footprint_km2(col: ee.ImageCollection, band: str, name: str) -> ee.Image:
@@ -77,7 +96,7 @@ def main() -> None:
     layers.init_ee()
     fc = region_fc()
     rows: dict[str, dict] = {k: {"label": v[0], "monthly": {}} for k, v in REGIONS.items()}
-    rows["borneo"] = {"label": "Borneo", "monthly": {}}
+    rows[ISLAND] = {"label": ISLAND_LABEL, "monthly": {}}
 
     for year in range(FIRST_YEAR, TODAY.year + 1):
         months = list(range(1, 13)) if year < TODAY.year else list(range(1, TODAY.month + 1))
@@ -90,7 +109,7 @@ def main() -> None:
                     "fire_km2": round(f.get(f"fire_{m:02d}", 0) or 0, 1),
                     "burned_km2": round(b.get(f"burn_{m:02d}", 0) or 0, 1),
                 }
-        print(f"{year}: Borneo fire {sum(fire[-1].get(f'fire_{m:02d}',0) for m in months):.0f} km²", flush=True)
+        print(f"{year}: {ISLAND_LABEL} fire {sum(fire[-1].get(f'fire_{m:02d}',0) for m in months):.0f} km²", flush=True)
 
     # Daily footprint for the current dry season (FIRMS only; MCD64A1 is monthly).
     season_start = date(TODAY.year, 6, 1)

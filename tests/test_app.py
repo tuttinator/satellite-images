@@ -31,7 +31,9 @@ def test_static_endpoints():
         ids = {l["id"] for l in c.get("/api/layers").json()}
         assert ids == set(layers.VIS) | {"change", "dnbr", "fire"}
         assert c.get("/story").status_code == 200
-        assert c.get("/api/borneo_fire").status_code in (200, 404)
+        assert c.get("/api/fire/borneo").status_code in (200, 404)
+        assert c.get("/api/fire/sumatra").status_code in (200, 404)
+        assert c.get("/api/fire/java").status_code == 404
 
 
 def test_change_requires_before_window():
