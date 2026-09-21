@@ -18,7 +18,7 @@ CLOUD_SCORE = "GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED"
 CLEAR_THRESHOLD = 0.6  # cs_cdf >= this counts as clear (Google's recommended 0.5–0.65)
 
 def init_ee(project: str | None = None) -> None:
-    """Same auth model as ../deforestation-vis: gcloud ADC + EE_PROJECT_ID."""
+    """Authenticate with Earth Engine: stored credentials or gcloud ADC, plus EE_PROJECT_ID (see README)."""
     load_dotenv()
     project = project or os.environ.get("EE_PROJECT_ID")
     if not project:

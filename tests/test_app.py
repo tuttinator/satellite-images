@@ -28,7 +28,7 @@ def test_static_endpoints():
     with TestClient(app) as c:
         assert c.get("/").status_code == 200
         assert c.get("/api/concessions").json()["features"]
-        ids = {l["id"] for l in c.get("/api/layers").json()}
+        ids = {row["id"] for row in c.get("/api/layers").json()}
         assert ids == set(layers.VIS) | {"change", "dnbr", "fire"}
         assert c.get("/story").status_code == 200
         assert c.get("/api/fire/borneo").status_code in (200, 404)
