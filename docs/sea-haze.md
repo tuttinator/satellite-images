@@ -24,7 +24,8 @@ is -180.2, 90.2 with 0.4° cells). The CAMS fields are 92 × 75 cells at 0.4°, 
 fields will be resampled.
 
 **Days.** From `START` (default 15 July of the current year, or the first CLI argument as
-`YYYY-MM-DD`) to the earlier of yesterday and the last day FIRMS has any data for. Everything is
+`YYYY-MM-DD`) to the earliest of yesterday, the last day FIRMS has any data for and the last day
+CAMS has forecast steps for. Everything is
 in UTC days, which matters for a region that spans UTC+7 to UTC+8: a fire detected at 02:00 local
 on the 18th is counted on the 17th.
 

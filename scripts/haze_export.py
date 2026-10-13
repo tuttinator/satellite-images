@@ -1,6 +1,6 @@
 """Daily smoke + fire grids for maritime Southeast Asia → outputs/sea_haze.json.
 
-For each UTC day from START to the latest complete day:
+For each UTC day from START to the latest day both FIRMS and CAMS cover:
   - pm25:  CAMS NRT surface PM2.5 (µg/m³), mean of the freshest forecast steps (< 12 h lead)
            on the native 0.4° grid. This is a *model* field (it assimilates satellite AOD), not
            a measurement; it is known to under-read extreme peat-smoke episodes near source.
@@ -105,7 +105,12 @@ def main() -> None:
         ee.ImageCollection("FIRMS").filterDate(START.isoformat(), "2100-01-01")
         .aggregate_max("system:time_start")
     ).format("YYYY-MM-dd").getInfo()
-    end = min(date.fromisoformat(firms_last), TODAY - timedelta(1))
+    cams_last = ee.Date(
+        ee.ImageCollection("ECMWF/CAMS/NRT").filterDate(START.isoformat(), "2100-01-01")
+        .filter(ee.Filter.lt("model_forecast_hour", 12))
+        .aggregate_max("system:time_start")
+    ).format("YYYY-MM-dd").getInfo()
+    end = min(date.fromisoformat(firms_last), date.fromisoformat(cams_last), TODAY - timedelta(1))
     days = [START + timedelta(n) for n in range((end - START).days + 1)]
 
     pm, aod, fire = [], [], []
