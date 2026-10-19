@@ -1,0 +1,82 @@
+{
+ "id": "pomalaa",
+ "name": "Pomalaa, Kolaka",
+ "centre": [
+  121.64,
+  -4.225
+ ],
+ "km": 18,
+ "bounds": [
+  121.55893,
+  -4.30585,
+  121.72107,
+  -4.14415
+ ],
+ "years": [
+  {
+   "year": 2013,
+   "cleared_km2": 13.39,
+   "observed": 0.996
+  },
+  {
+   "year": 2014,
+   "cleared_km2": 14.73,
+   "observed": 0.996
+  },
+  {
+   "year": 2015,
+   "cleared_km2": 14.18,
+   "observed": 0.996
+  },
+  {
+   "year": 2016,
+   "cleared_km2": 12.51,
+   "observed": 0.996
+  },
+  {
+   "year": 2017,
+   "cleared_km2": 11.89,
+   "observed": 0.995
+  },
+  {
+   "year": 2018,
+   "cleared_km2": 12.4,
+   "observed": 0.996
+  },
+  {
+   "year": 2019,
+   "cleared_km2": 14.07,
+   "observed": 0.996
+  },
+  {
+   "year": 2020,
+   "cleared_km2": 13.91,
+   "observed": 0.994
+  },
+  {
+   "year": 2021,
+   "cleared_km2": 14.53,
+   "observed": 0.992
+  },
+  {
+   "year": 2022,
+   "cleared_km2": 16.23,
+   "observed": 0.996
+  },
+  {
+   "year": 2023,
+   "cleared_km2": 19.66,
+   "observed": 0.996
+  },
+  {
+   "year": 2024,
+   "cleared_km2": 19.74,
+   "observed": 0.996
+  },
+  {
+   "year": 2025,
+   "cleared_km2": 26.13,
+   "observed": 0.996
+  }
+ ]
+}

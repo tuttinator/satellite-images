@@ -1,0 +1,527 @@
+{
+ "generated": "2026-10-19",
+ "years": [
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "palette": [
+  "#fde725",
+  "#b5de2b",
+  "#6ece58",
+  "#35b779",
+  "#1f9e89",
+  "#26828e",
+  "#31688e",
+  "#3e4989",
+  "#482878",
+  "#440154",
+  "#7a0177",
+  "#ae017e"
+ ],
+ "cleared_ndvi": 0.3,
+ "sites": [
+  {
+   "id": "morowali",
+   "name": "IMIP, Morowali",
+   "centre": [
+    122.165,
+    -2.845
+   ],
+   "km": 18,
+   "bounds": [
+    122.08405,
+    -2.92585,
+    122.24595,
+    -2.76415
+   ],
+   "years": [
+    {
+     "year": 2013,
+     "cleared_km2": 4.7,
+     "observed": 0.99
+    },
+    {
+     "year": 2014,
+     "cleared_km2": 6.21,
+     "observed": 0.967
+    },
+    {
+     "year": 2015,
+     "cleared_km2": 9.22,
+     "observed": 0.985
+    },
+    {
+     "year": 2016,
+     "cleared_km2": 8.48,
+     "observed": 0.964
+    },
+    {
+     "year": 2017,
+     "cleared_km2": 10.24,
+     "observed": 0.883
+    },
+    {
+     "year": 2018,
+     "cleared_km2": 13.42,
+     "observed": 0.991
+    },
+    {
+     "year": 2019,
+     "cleared_km2": 18.73,
+     "observed": 0.989
+    },
+    {
+     "year": 2020,
+     "cleared_km2": 19.95,
+     "observed": 0.996
+    },
+    {
+     "year": 2021,
+     "cleared_km2": 26.97,
+     "observed": 0.968
+    },
+    {
+     "year": 2022,
+     "cleared_km2": 29.92,
+     "observed": 0.993
+    },
+    {
+     "year": 2023,
+     "cleared_km2": 35.55,
+     "observed": 0.976
+    },
+    {
+     "year": 2024,
+     "cleared_km2": 33.56,
+     "observed": 0.984
+    },
+    {
+     "year": 2025,
+     "cleared_km2": 36.6,
+     "observed": 0.996
+    }
+   ]
+  },
+  {
+   "id": "weda-bay",
+   "name": "IWIP, Weda Bay",
+   "centre": [
+    127.95,
+    0.53
+   ],
+   "km": 20,
+   "bounds": [
+    127.86017,
+    0.44017,
+    128.03983,
+    0.61983
+   ],
+   "years": [
+    {
+     "year": 2013,
+     "cleared_km2": 1.73,
+     "observed": 0.906
+    },
+    {
+     "year": 2014,
+     "cleared_km2": 1.92,
+     "observed": 0.994
+    },
+    {
+     "year": 2015,
+     "cleared_km2": 2.02,
+     "observed": 0.993
+    },
+    {
+     "year": 2016,
+     "cleared_km2": 5.21,
+     "observed": 0.956
+    },
+    {
+     "year": 2017,
+     "cleared_km2": 1.86,
+     "observed": 0.966
+    },
+    {
+     "year": 2018,
+     "cleared_km2": 1.74,
+     "observed": 0.969
+    },
+    {
+     "year": 2019,
+     "cleared_km2": 4.27,
+     "observed": 0.966
+    },
+    {
+     "year": 2020,
+     "cleared_km2": 8.82,
+     "observed": 0.988
+    },
+    {
+     "year": 2021,
+     "cleared_km2": 11.95,
+     "observed": 0.985
+    },
+    {
+     "year": 2022,
+     "cleared_km2": 18.8,
+     "observed": 0.988
+    },
+    {
+     "year": 2023,
+     "cleared_km2": 30.19,
+     "observed": 0.994
+    },
+    {
+     "year": 2024,
+     "cleared_km2": 37.4,
+     "observed": 0.975
+    },
+    {
+     "year": 2025,
+     "cleared_km2": 41.54,
+     "observed": 0.939
+    }
+   ]
+  },
+  {
+   "id": "obi",
+   "name": "Harita, Obi Island",
+   "centre": [
+    127.425,
+    -1.555
+   ],
+   "km": 12,
+   "bounds": [
+    127.37108,
+    -1.6089,
+    127.47892,
+    -1.5011
+   ],
+   "years": [
+    {
+     "year": 2013,
+     "cleared_km2": 7.19,
+     "observed": 0.996
+    },
+    {
+     "year": 2014,
+     "cleared_km2": 7.61,
+     "observed": 0.994
+    },
+    {
+     "year": 2015,
+     "cleared_km2": 8.19,
+     "observed": 0.996
+    },
+    {
+     "year": 2016,
+     "cleared_km2": 8.31,
+     "observed": 0.996
+    },
+    {
+     "year": 2017,
+     "cleared_km2": 8.24,
+     "observed": 0.996
+    },
+    {
+     "year": 2018,
+     "cleared_km2": 9.39,
+     "observed": 0.996
+    },
+    {
+     "year": 2019,
+     "cleared_km2": 12.54,
+     "observed": 0.996
+    },
+    {
+     "year": 2020,
+     "cleared_km2": 15.92,
+     "observed": 0.993
+    },
+    {
+     "year": 2021,
+     "cleared_km2": 15.61,
+     "observed": 0.996
+    },
+    {
+     "year": 2022,
+     "cleared_km2": 18.01,
+     "observed": 0.996
+    },
+    {
+     "year": 2023,
+     "cleared_km2": 26.49,
+     "observed": 0.996
+    },
+    {
+     "year": 2024,
+     "cleared_km2": 30.54,
+     "observed": 0.996
+    },
+    {
+     "year": 2025,
+     "cleared_km2": 33.37,
+     "observed": 0.996
+    }
+   ]
+  },
+  {
+   "id": "konawe",
+   "name": "VDNI and OSS, Konawe",
+   "centre": [
+    122.42,
+    -3.855
+   ],
+   "km": 14,
+   "bounds": [
+    122.35698,
+    -3.91788,
+    122.48302,
+    -3.79212
+   ],
+   "years": [
+    {
+     "year": 2013,
+     "cleared_km2": 3.74,
+     "observed": 0.983
+    },
+    {
+     "year": 2014,
+     "cleared_km2": 3.73,
+     "observed": 0.995
+    },
+    {
+     "year": 2015,
+     "cleared_km2": 6.09,
+     "observed": 0.995
+    },
+    {
+     "year": 2016,
+     "cleared_km2": 4.17,
+     "observed": 0.995
+    },
+    {
+     "year": 2017,
+     "cleared_km2": 4.95,
+     "observed": 0.995
+    },
+    {
+     "year": 2018,
+     "cleared_km2": 6.17,
+     "observed": 0.995
+    },
+    {
+     "year": 2019,
+     "cleared_km2": 12.92,
+     "observed": 0.995
+    },
+    {
+     "year": 2020,
+     "cleared_km2": 10.55,
+     "observed": 0.995
+    },
+    {
+     "year": 2021,
+     "cleared_km2": 12.86,
+     "observed": 0.995
+    },
+    {
+     "year": 2022,
+     "cleared_km2": 14.41,
+     "observed": 0.995
+    },
+    {
+     "year": 2023,
+     "cleared_km2": 15.99,
+     "observed": 0.995
+    },
+    {
+     "year": 2024,
+     "cleared_km2": 14.4,
+     "observed": 0.995
+    },
+    {
+     "year": 2025,
+     "cleared_km2": 14.4,
+     "observed": 0.995
+    }
+   ]
+  },
+  {
+   "id": "pomalaa",
+   "name": "Pomalaa, Kolaka",
+   "centre": [
+    121.64,
+    -4.225
+   ],
+   "km": 18,
+   "bounds": [
+    121.55893,
+    -4.30585,
+    121.72107,
+    -4.14415
+   ],
+   "years": [
+    {
+     "year": 2013,
+     "cleared_km2": 13.39,
+     "observed": 0.996
+    },
+    {
+     "year": 2014,
+     "cleared_km2": 14.73,
+     "observed": 0.996
+    },
+    {
+     "year": 2015,
+     "cleared_km2": 14.18,
+     "observed": 0.996
+    },
+    {
+     "year": 2016,
+     "cleared_km2": 12.51,
+     "observed": 0.996
+    },
+    {
+     "year": 2017,
+     "cleared_km2": 11.89,
+     "observed": 0.995
+    },
+    {
+     "year": 2018,
+     "cleared_km2": 12.4,
+     "observed": 0.996
+    },
+    {
+     "year": 2019,
+     "cleared_km2": 14.07,
+     "observed": 0.996
+    },
+    {
+     "year": 2020,
+     "cleared_km2": 13.91,
+     "observed": 0.994
+    },
+    {
+     "year": 2021,
+     "cleared_km2": 14.53,
+     "observed": 0.992
+    },
+    {
+     "year": 2022,
+     "cleared_km2": 16.23,
+     "observed": 0.996
+    },
+    {
+     "year": 2023,
+     "cleared_km2": 19.66,
+     "observed": 0.996
+    },
+    {
+     "year": 2024,
+     "cleared_km2": 19.74,
+     "observed": 0.996
+    },
+    {
+     "year": 2025,
+     "cleared_km2": 26.13,
+     "observed": 0.996
+    }
+   ]
+  },
+  {
+   "id": "sorowako",
+   "name": "Vale, Sorowako",
+   "centre": [
+    121.37,
+    -2.55
+   ],
+   "km": 18,
+   "bounds": [
+    121.28907,
+    -2.63085,
+    121.45093,
+    -2.46915
+   ],
+   "years": [
+    {
+     "year": 2013,
+     "cleared_km2": 14.21,
+     "observed": 0.994
+    },
+    {
+     "year": 2014,
+     "cleared_km2": 16.19,
+     "observed": 0.994
+    },
+    {
+     "year": 2015,
+     "cleared_km2": 17.79,
+     "observed": 0.996
+    },
+    {
+     "year": 2016,
+     "cleared_km2": 17.0,
+     "observed": 0.961
+    },
+    {
+     "year": 2017,
+     "cleared_km2": 16.65,
+     "observed": 0.879
+    },
+    {
+     "year": 2018,
+     "cleared_km2": 16.93,
+     "observed": 0.996
+    },
+    {
+     "year": 2019,
+     "cleared_km2": 20.09,
+     "observed": 0.993
+    },
+    {
+     "year": 2020,
+     "cleared_km2": 18.58,
+     "observed": 0.996
+    },
+    {
+     "year": 2021,
+     "cleared_km2": 15.66,
+     "observed": 0.987
+    },
+    {
+     "year": 2022,
+     "cleared_km2": 15.02,
+     "observed": 0.995
+    },
+    {
+     "year": 2023,
+     "cleared_km2": 15.31,
+     "observed": 0.99
+    },
+    {
+     "year": 2024,
+     "cleared_km2": 13.34,
+     "observed": 0.994
+    },
+    {
+     "year": 2025,
+     "cleared_km2": 13.72,
+     "observed": 0.99
+    }
+   ]
+  }
+ ]
+}

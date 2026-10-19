@@ -1,0 +1,82 @@
+{
+ "id": "sorowako",
+ "name": "Vale, Sorowako",
+ "centre": [
+  121.37,
+  -2.55
+ ],
+ "km": 18,
+ "bounds": [
+  121.28907,
+  -2.63085,
+  121.45093,
+  -2.46915
+ ],
+ "years": [
+  {
+   "year": 2013,
+   "cleared_km2": 14.21,
+   "observed": 0.994
+  },
+  {
+   "year": 2014,
+   "cleared_km2": 16.19,
+   "observed": 0.994
+  },
+  {
+   "year": 2015,
+   "cleared_km2": 17.79,
+   "observed": 0.996
+  },
+  {
+   "year": 2016,
+   "cleared_km2": 17.0,
+   "observed": 0.961
+  },
+  {
+   "year": 2017,
+   "cleared_km2": 16.65,
+   "observed": 0.879
+  },
+  {
+   "year": 2018,
+   "cleared_km2": 16.93,
+   "observed": 0.996
+  },
+  {
+   "year": 2019,
+   "cleared_km2": 20.09,
+   "observed": 0.993
+  },
+  {
+   "year": 2020,
+   "cleared_km2": 18.58,
+   "observed": 0.996
+  },
+  {
+   "year": 2021,
+   "cleared_km2": 15.66,
+   "observed": 0.987
+  },
+  {
+   "year": 2022,
+   "cleared_km2": 15.02,
+   "observed": 0.995
+  },
+  {
+   "year": 2023,
+   "cleared_km2": 15.31,
+   "observed": 0.99
+  },
+  {
+   "year": 2024,
+   "cleared_km2": 13.34,
+   "observed": 0.994
+  },
+  {
+   "year": 2025,
+   "cleared_km2": 13.72,
+   "observed": 0.99
+  }
+ ]
+}

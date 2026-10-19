@@ -1,0 +1,82 @@
+{
+ "id": "obi",
+ "name": "Harita, Obi Island",
+ "centre": [
+  127.425,
+  -1.555
+ ],
+ "km": 12,
+ "bounds": [
+  127.37108,
+  -1.6089,
+  127.47892,
+  -1.5011
+ ],
+ "years": [
+  {
+   "year": 2013,
+   "cleared_km2": 7.19,
+   "observed": 0.996
+  },
+  {
+   "year": 2014,
+   "cleared_km2": 7.61,
+   "observed": 0.994
+  },
+  {
+   "year": 2015,
+   "cleared_km2": 8.19,
+   "observed": 0.996
+  },
+  {
+   "year": 2016,
+   "cleared_km2": 8.31,
+   "observed": 0.996
+  },
+  {
+   "year": 2017,
+   "cleared_km2": 8.24,
+   "observed": 0.996
+  },
+  {
+   "year": 2018,
+   "cleared_km2": 9.39,
+   "observed": 0.996
+  },
+  {
+   "year": 2019,
+   "cleared_km2": 12.54,
+   "observed": 0.996
+  },
+  {
+   "year": 2020,
+   "cleared_km2": 15.92,
+   "observed": 0.993
+  },
+  {
+   "year": 2021,
+   "cleared_km2": 15.61,
+   "observed": 0.996
+  },
+  {
+   "year": 2022,
+   "cleared_km2": 18.01,
+   "observed": 0.996
+  },
+  {
+   "year": 2023,
+   "cleared_km2": 26.49,
+   "observed": 0.996
+  },
+  {
+   "year": 2024,
+   "cleared_km2": 30.54,
+   "observed": 0.996
+  },
+  {
+   "year": 2025,
+   "cleared_km2": 33.37,
+   "observed": 0.996
+  }
+ ]
+}

@@ -1,0 +1,82 @@
+{
+ "id": "weda-bay",
+ "name": "IWIP, Weda Bay",
+ "centre": [
+  127.95,
+  0.53
+ ],
+ "km": 20,
+ "bounds": [
+  127.86017,
+  0.44017,
+  128.03983,
+  0.61983
+ ],
+ "years": [
+  {
+   "year": 2013,
+   "cleared_km2": 1.73,
+   "observed": 0.906
+  },
+  {
+   "year": 2014,
+   "cleared_km2": 1.92,
+   "observed": 0.994
+  },
+  {
+   "year": 2015,
+   "cleared_km2": 2.02,
+   "observed": 0.993
+  },
+  {
+   "year": 2016,
+   "cleared_km2": 5.21,
+   "observed": 0.956
+  },
+  {
+   "year": 2017,
+   "cleared_km2": 1.86,
+   "observed": 0.966
+  },
+  {
+   "year": 2018,
+   "cleared_km2": 1.74,
+   "observed": 0.969
+  },
+  {
+   "year": 2019,
+   "cleared_km2": 4.27,
+   "observed": 0.966
+  },
+  {
+   "year": 2020,
+   "cleared_km2": 8.82,
+   "observed": 0.988
+  },
+  {
+   "year": 2021,
+   "cleared_km2": 11.95,
+   "observed": 0.985
+  },
+  {
+   "year": 2022,
+   "cleared_km2": 18.8,
+   "observed": 0.988
+  },
+  {
+   "year": 2023,
+   "cleared_km2": 30.19,
+   "observed": 0.994
+  },
+  {
+   "year": 2024,
+   "cleared_km2": 37.4,
+   "observed": 0.975
+  },
+  {
+   "year": 2025,
+   "cleared_km2": 41.54,
+   "observed": 0.939
+  }
+ ]
+}

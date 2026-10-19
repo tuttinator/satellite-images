@@ -1,0 +1,82 @@
+{
+ "id": "morowali",
+ "name": "IMIP, Morowali",
+ "centre": [
+  122.165,
+  -2.845
+ ],
+ "km": 18,
+ "bounds": [
+  122.08405,
+  -2.92585,
+  122.24595,
+  -2.76415
+ ],
+ "years": [
+  {
+   "year": 2013,
+   "cleared_km2": 4.7,
+   "observed": 0.99
+  },
+  {
+   "year": 2014,
+   "cleared_km2": 6.21,
+   "observed": 0.967
+  },
+  {
+   "year": 2015,
+   "cleared_km2": 9.22,
+   "observed": 0.985
+  },
+  {
+   "year": 2016,
+   "cleared_km2": 8.48,
+   "observed": 0.964
+  },
+  {
+   "year": 2017,
+   "cleared_km2": 10.24,
+   "observed": 0.883
+  },
+  {
+   "year": 2018,
+   "cleared_km2": 13.42,
+   "observed": 0.991
+  },
+  {
+   "year": 2019,
+   "cleared_km2": 18.73,
+   "observed": 0.989
+  },
+  {
+   "year": 2020,
+   "cleared_km2": 19.95,
+   "observed": 0.996
+  },
+  {
+   "year": 2021,
+   "cleared_km2": 26.97,
+   "observed": 0.968
+  },
+  {
+   "year": 2022,
+   "cleared_km2": 29.92,
+   "observed": 0.993
+  },
+  {
+   "year": 2023,
+   "cleared_km2": 35.55,
+   "observed": 0.976
+  },
+  {
+   "year": 2024,
+   "cleared_km2": 33.56,
+   "observed": 0.984
+  },
+  {
+   "year": 2025,
+   "cleared_km2": 36.6,
+   "observed": 0.996
+  }
+ ]
+}

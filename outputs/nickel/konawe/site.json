@@ -1,0 +1,82 @@
+{
+ "id": "konawe",
+ "name": "VDNI and OSS, Konawe",
+ "centre": [
+  122.42,
+  -3.855
+ ],
+ "km": 14,
+ "bounds": [
+  122.35698,
+  -3.91788,
+  122.48302,
+  -3.79212
+ ],
+ "years": [
+  {
+   "year": 2013,
+   "cleared_km2": 3.74,
+   "observed": 0.983
+  },
+  {
+   "year": 2014,
+   "cleared_km2": 3.73,
+   "observed": 0.995
+  },
+  {
+   "year": 2015,
+   "cleared_km2": 6.09,
+   "observed": 0.995
+  },
+  {
+   "year": 2016,
+   "cleared_km2": 4.17,
+   "observed": 0.995
+  },
+  {
+   "year": 2017,
+   "cleared_km2": 4.95,
+   "observed": 0.995
+  },
+  {
+   "year": 2018,
+   "cleared_km2": 6.17,
+   "observed": 0.995
+  },
+  {
+   "year": 2019,
+   "cleared_km2": 12.92,
+   "observed": 0.995
+  },
+  {
+   "year": 2020,
+   "cleared_km2": 10.55,
+   "observed": 0.995
+  },
+  {
+   "year": 2021,
+   "cleared_km2": 12.86,
+   "observed": 0.995
+  },
+  {
+   "year": 2022,
+   "cleared_km2": 14.41,
+   "observed": 0.995
+  },
+  {
+   "year": 2023,
+   "cleared_km2": 15.99,
+   "observed": 0.995
+  },
+  {
+   "year": 2024,
+   "cleared_km2": 14.4,
+   "observed": 0.995
+  },
+  {
+   "year": 2025,
+   "cleared_km2": 14.4,
+   "observed": 0.995
+  }
+ ]
+}
