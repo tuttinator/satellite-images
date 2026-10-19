@@ -110,6 +110,52 @@ provisional; only Terra was flying before mid-2002; CAMS surface concentrations 
 not measurements. The full method, the JSON schemas and the interpretation notes are in
 [`docs/sea-haze.md`](docs/sea-haze.md).
 
+## Nickel: Landsat views of six nickel sites
+
+This is the pipeline behind the nickel post. Three scripts:
+
+```bash
+make nickel       # scripts/nickel_export.py [site ...] → outputs/nickel/<site>/ and sites.json (~1 hr)
+make nickel-air   # scripts/nickel_air.py → outputs/nickel/air.json (~10 min)
+make nickel-blog DEST=path/to/site/static/data/nickel-boom     # package both for a website
+```
+
+**`scripts/nickel_export.py`** covers IMIP Morowali, IWIP Weda Bay, Harita on Obi, VDNI/OSS in
+Konawe, Pomalaa and Vale's Sorowako (the pre-boom baseline). For each site, a square frame 12–20 km
+across, and each year from 2013 to the last complete year, it writes:
+
+- **`<year>.jpg`**: a true-colour median of Landsat 8 and 9 Collection 2 surface reflectance. Only
+  scenes under 50% cloud are used, masked with `QA_PIXEL` (cloud, cirrus, shadow, dilated cloud)
+  grown by 60 m. Two more checks catch the thin cloud the QA band misses over Halmahera: a pixel
+  that is bright blue in a scene is dropped unless it is bright in most of that year's scenes, as a
+  roof is; and a pixel bright in one year's composite but not in the next three years' is replaced
+  by those years' view. Gaps are filled from the clear scenes of the years either side, then of the
+  five years around.
+- **`cleared_km2`** in `site.json`: land in the frame with NDVI under 0.3, MNDWI under 0 and SWIR1
+  reflectance over 0.1. That is pits, roads, roofs and tailings, but also towns and beaches, so the
+  first year is a baseline, not zero. The SWIR test keeps hazy, turbid sea out of the count.
+- **`cleared.png`**: the first year each pixel was cleared and stayed cleared the year after,
+  colour-coded by year, transparent where land was already cleared in 2013 or never was. It is
+  built locally from per-year masks, which share the thumbnails' EPSG:4326 grid.
+
+Sites and frame sizes are in `SITES` at the top of the script. Weda Bay is close to Earth Engine's
+per-request memory limit, which is why each year's median is built once and reused, masks come down
+in four tiles, the area sums use `tileScale=4`, and requests retry with backoff. Run sites one at a
+time; six in parallel draws 429s.
+
+**`scripts/nickel_air.py`** writes annual mean TROPOMI tropospheric NO2 (Sentinel-5P offline L3) on
+a 0.05° grid over Sulawesi and Halmahera from 2019, and per site the NO2 mean over the frame minus a
+ring 30–60 km out, plus VIIRS night lights from the Earth Observation Group's annual VNL v2
+composites (`median_masked`, which drops fires, flares and other short-lived light), summed over the
+frame.
+
+**`scripts/nickel_blog.py`** copies `sites.json`, `air.json` and each site's `cleared.png`, and
+re-encodes the frames as progressive JPEG at quality 74.
+
+Cleared land is not mined land, and a frame is not a concession: much of the mining that feeds
+these parks is outside the frames. NO2 is a column average, so it shows where combustion is, not how
+much any one plant emits.
+
 ## Viewer: Palangka Raya forest viewer
 
 ```bash
